@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales List with Add Modal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="myapp" class="container">
+        <h1>Sales</h1>
+        <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addSaleModal">
+            Add Sale
+        </button>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Sale Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="sale in sales" :key="sale.id">
+                    <td>{{ sale.product_name }}</td>
+                    <td>{{ sale.quantity }}</td>
+                    <td>{{ new Date(sale.sale_date).toLocaleString() }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Add Sale Modal -->
+        <div class="modal fade" id="addSaleModal" tabindex="-1" aria-labelledby="addSaleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addSaleModalLabel">Add Sale</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form @submit.prevent="addSale">
+                            <div class="mb-3">
+                                <label for="productID" class="form-label">Product ID</label>
+                                <input type="number" class="form-control" id="productID" v-model="newSale.product_id" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="quantity" class="form-label">Quantity</label>
+                                <input type="number" class="form-control" id="quantity" v-model="newSale.quantity" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Sale</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        Vue.createApp({
+            data() {
+                return {
+                    sales: [],  // Array to hold the sales list
+                    newSale: {  // Object to hold the new sale data
+                        product_id: '',
+                        quantity: 0
+                    }
+                }
+            },
+            methods: {
+                fetch_sales() {
+                    axios.get('http://127.0.0.1:5000/sales')
+                        .then(response => {
+                            this.sales = response.data;
+                        })
+                        .catch(error => {
+                            console.error('Error fetching sales:', error);
+                        });
+                },
+                addSale() {
+                    axios.post('http://127.0.0.1:5000/sales', this.newSale)
+                        .then(response => {
+                            this.fetch_sales(); // Fetch the updated list after adding the sale
+                            this.newSale = { product_id: '', quantity: 0 };  // Reset form
+                            const modalElement = document.getElementById('addSaleModal');
+                            const modal = bootstrap.Modal.getInstance(modalElement);
+                            modal.hide();  // Hide the modal
+                        })
+                        .catch(error => {
+                            console.error('Error adding sale:', error);
+                        });
+                }
+            },
+            created() {
+                this.fetch_sales();  // Fetch sales on component creation
+            }
+        }).mount('#myapp');
+    </script>
+</body>
+</html>
