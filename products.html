@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Products Manager</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 p-6">
+  <div id="app" class="max-w-3xl mx-auto bg-white p-6 rounded shadow" v-cloak>
+    <h1 class="text-2xl font-bold mb-4">📦 Products Manager</h1>
+
+    <!-- Add Product Form -->
+    <form @submit.prevent="submitProduct" class="space-y-4 mb-6">
+      <div>
+        <label class="block font-semibold mb-1">Product Name:</label>
+        <input type="text" v-model="product.productname" class="w-full border rounded px-3 py-2" required />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">Price:</label>
+        <input type="number" v-model.number="product.productprice" class="w-full border rounded px-3 py-2" step="0.01" required />
+      </div>
+
+      <div>
+        <label class="block font-semibold mb-1">Stock Quantity:</label>
+        <input type="number" v-model.number="product.stockquantity" class="w-full border rounded px-3 py-2" min="0" required />
+      </div>
+
+      <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
+        Add Product
+      </button>
+
+      <div v-if="message" class="text-green-600 mt-2">{{ message }}</div>
+      <div v-if="error" class="text-red-600 mt-2">{{ error }}</div>
+    </form>
+
+    <!-- Products Table -->
+    <div v-if="products.length">
+      <h2 class="text-xl font-semibold mb-2">📋 Product List</h2>
+      <table class="w-full border border-collapse">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="border p-2">ID</th>
+            <th class="border p-2">Name</th>
+            <th class="border p-2">Price</th>
+            <th class="border p-2">Stock</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="p in products" :key="p.id">
+            <td class="border p-2">{{ p.id }}</td>
+            <td class="border p-2">{{ p.productname }}</td>
+            <td class="border p-2">{{ p.productprice }}</td>
+            <td class="border p-2">{{ p.stockquantity }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          products: [],
+          product: { productname: '', productprice: '', stockquantity: 0 },
+          message: '',
+          error: ''
+        };
+      },
+      methods: {
+        fetchProducts() {
+          axios.get('http://127.0.0.1:5000/products')
+            .then(res => { this.products = res.data; })
+            .catch(() => { this.error = "Failed to load products."; });
+        },
+        submitProduct() {
+          axios.post('http://127.0.0.1:5000/products', this.product)
+            .then(() => {
+              this.message = "Product added successfully.";
+              this.error = '';
+              this.product = { productname: '', productprice: '', stockquantity: 0 };
+              this.fetchProducts();
+            })
+            .catch(err => {
+              this.error = err.response?.data?.error || "Failed to add product.";
+              this.message = '';
+            });
+        }
+      },
+      mounted() {
+        this.fetchProducts();
+      }
+    }).mount('#app');
+  </script>
+</body>
+</html>
+
+
+

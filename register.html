@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <div id="app" class="bg-white p-6 rounded shadow w-96">
+    <h1 class="text-2xl font-bold mb-4">📝 Register</h1>
+
+    <form @submit.prevent="registerUser" class="space-y-4">
+      <div>
+        <label class="block font-semibold">Name</label>
+        <input type="text" v-model="user.name" class="w-full border px-3 py-2 rounded">
+      </div>
+
+      <div>
+        <label class="block font-semibold">Email</label>
+        <input type="email" v-model="user.email" class="w-full border px-3 py-2 rounded">
+      </div>
+
+      <div>
+        <label class="block font-semibold">Password</label>
+        <input type="password" v-model="user.password" class="w-full border px-3 py-2 rounded">
+      </div>
+
+      <div>
+        <label class="block font-semibold">Phone</label>
+        <input type="text" v-model="user.phone" class="w-full border px-3 py-2 rounded">
+      </div>
+
+      <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
+        Register
+      </button>
+    </form>
+
+    <div v-if="message" class="text-green-600 mt-4">{{ message }}</div>
+    <div v-if="error" class="text-red-600 mt-4">{{ error }}</div>
+  </div>
+
+  <script>
+    const { createApp } = Vue;
+
+    createApp({
+      data() {
+        return {
+          user: { name: '', email: '', password: '', phone: '' },
+          message: '',
+          error: ''
+        };
+      },
+      methods: {
+        registerUser() {
+          axios.post("http://127.0.0.1:5000/register", this.user)
+            .then(res => {
+              this.message = res.data.message;
+              this.error = '';
+              this.user = { name: '', email: '', password: '', phone: '' };
+            })
+            .catch(err => {
+              this.error = err.response?.data?.error || "Registration failed";
+              this.message = '';
+            });
+        }
+      }
+    }).mount("#app");
+  </script>
+</body>
+</html>
