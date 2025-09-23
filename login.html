@@ -42,7 +42,7 @@
       },
       methods: {
         loginUser() {
-          axios.post("http://127.0.0.1:5000/login", this.credentials)
+          axios.post("http://157.230.111.87:5000/login", this.credentials)
             .then(res => {
               // Save token + user info
               localStorage.setItem("token", res.data.token);

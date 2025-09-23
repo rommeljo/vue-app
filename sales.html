@@ -70,16 +70,16 @@
       },
       methods: {
         async fetchSales() {
-          const res = await axios.get('http://127.0.0.1:5000/sales');
+          const res = await axios.get('http://157.230.111.87:5000/sales');
           this.sales = res.data;
         },
         async fetchProducts() {
-          const res = await axios.get('http://127.0.0.1:5000/products');
+          const res = await axios.get('http://157.230.111.87:5000/products');
           this.products = res.data;
         },
        async addSale() {
   try {
-    let res = await axios.post('http://127.0.0.1:5000/sales', this.newSale);
+    let res = await axios.post('http://157.230.111.87:5000/sales', this.newSale);
     let sale = res.data;
 
     // Ask for phone number to pay
