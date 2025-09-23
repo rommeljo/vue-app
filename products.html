@@ -75,12 +75,12 @@
       },
       methods: {
         fetchProducts() {
-          axios.get('http://127.0.0.1:5000/products')
+          axios.get('http://157.230.111.87/products')
             .then(res => { this.products = res.data; })
             .catch(() => { this.error = "Failed to load products."; });
         },
         submitProduct() {
-          axios.post('http://127.0.0.1:5000/products', this.product)
+          axios.post('http://157.230.111.87/products', this.product)
             .then(() => {
               this.message = "Product added successfully.";
               this.error = '';
