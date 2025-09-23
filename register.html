@@ -54,7 +54,7 @@
       },
       methods: {
         registerUser() {
-          axios.post("http://127.0.0.1:5000/register", this.user)
+          axios.post("http://157.230.111.87/register", this.user)
             .then(res => {
               this.message = res.data.message;
               this.error = '';
