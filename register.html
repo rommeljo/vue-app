@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Register</title>
-  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
@@ -14,17 +14,17 @@
     <form @submit.prevent="registerUser" class="space-y-4">
       <div>
         <label class="block font-semibold">Name</label>
-        <input type="text" v-model="user.name" class="w-full border px-3 py-2 rounded">
+        <input type="text" v-model="user.name" class="w-full border px-3 py-2 rounded" required>
       </div>
 
       <div>
         <label class="block font-semibold">Email</label>
-        <input type="email" v-model="user.email" class="w-full border px-3 py-2 rounded">
+        <input type="email" v-model="user.email" class="w-full border px-3 py-2 rounded" required>
       </div>
 
       <div>
         <label class="block font-semibold">Password</label>
-        <input type="password" v-model="user.password" class="w-full border px-3 py-2 rounded">
+        <input type="password" v-model="user.password" class="w-full border px-3 py-2 rounded" required>
       </div>
 
       <div>
@@ -53,20 +53,27 @@
         };
       },
       methods: {
-        registerUser() {
-          axios.post("http://157.230.111.87:5000/register", this.user)
-            .then(res => {
-              this.message = res.data.message;
-              this.error = '';
-              this.user = { name: '', email: '', password: '', phone: '' };
-            })
-            .catch(err => {
-              this.error = err.response?.data?.error || "Registration failed";
-              this.message = '';
-            });
+        async registerUser() {
+          try {
+            const res = await axios.post("http://127.0.0.1:8000/register", this.user);
+
+            // Save the token for future API calls
+            localStorage.setItem("token", res.data.token);
+
+            this.message = "Registration successful!";
+            this.error = '';
+            this.user = { name: '', email: '', password: '', phone: '' };
+
+            // Redirect to protected page (like products.html)
+            window.location.href = "products.html";
+          } catch (err) {
+            this.error = err.response?.data?.detail || "Registration failed";
+            this.message = '';
+          }
         }
       }
     }).mount("#app");
   </script>
 </body>
 </html>
+
