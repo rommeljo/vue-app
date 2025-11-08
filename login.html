@@ -25,6 +25,7 @@
       <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
         Login
       </button>
+      dont have an account? <a href="register.html" class="text-blue-600 hover:underline">Register here</a>
     </form>
 
     <div v-if="message" class="text-green-600 mt-4">{{ message }}</div>
@@ -37,6 +38,7 @@
     createApp({
       data() {
         return {
+          url: "http://api.mydukashop.co.ke",
           email: '',
           password: '',
           message: '',
@@ -51,7 +53,7 @@
             form.append("username", this.email);
             form.append("password", this.password);
 
-            const res = await axios.post("http://127.0.0.1:8000/login", form, {
+            const res = await axios.post(this.url +"/login", form, {
               headers: { "Content-Type": "application/x-www-form-urlencoded" }
             });
 

@@ -35,6 +35,7 @@
       <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700">
         Register
       </button>
+      already have an account? <a href="login.html" class="text-blue-600 hover:underline">Login here</a>
     </form>
 
     <div v-if="message" class="text-green-600 mt-4">{{ message }}</div>
@@ -47,6 +48,7 @@
     createApp({
       data() {
         return {
+          url: "http://api.mydukashop.co.ke",
           user: { name: '', email: '', password: '', phone: '' },
           message: '',
           error: ''
@@ -55,7 +57,7 @@
       methods: {
         async registerUser() {
           try {
-            const res = await axios.post("http://127.0.0.1:8000/register", this.user);
+            const res = await axios.post(this.url + "/register", this.user);
 
             // Save the token for future API calls
             localStorage.setItem("token", res.data.token);
