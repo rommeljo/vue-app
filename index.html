@@ -1,45 +1,131 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>home</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title> My Shop </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #f5f7fa;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .navbar {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #0d6efd, #0dcaf0);
+      color: white;
+      text-align: center;
+      padding: 80px 20px;
+      border-radius: 0 0 30px 30px;
+    }
+
+    .hero h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    footer {
+      background: #0d6efd;
+      color: #fff;
+      text-align: center;
+      padding: 15px 0;
+      margin-top: 60px;
+      border-radius: 20px 20px 0 0;
+    }
+  </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="container">
-            <a class="navbar-brand" href="/">My Shop</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/products.html">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/sales.html">Sales</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="/login.html">Login</a>
-                    </li>
-                     <li class="nav-item">
-                        <a class="nav-link" href="/register.html">Register</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
-    <!-- Content Section -->
-    <div class="container mt-5">
-       
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="/">My Shop </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          
+         
+          <li class="nav-item"><a class="nav-link" href="/register.html">Register</a></li>
+          <li class="nav-item"><a class="nav-link" href="/login.html">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <h1>Welcome to My Shop Management</h1>
+      <p>Manage your products, track sales, and monitor performance — all in one place.</p>
+    </div>
+  </section>
+
+  <!-- Dashboard Cards -->
+  <div class="container mt-5">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card shadow-sm text-center p-4">
+          <div class="card-body">
+            <h4 class="card-title text-primary fw-bold"> Products</h4>
+            <p class="card-text mt-3">Add, edit, and manage all products in your inventory. Stay organized and up to date.</p>
+           
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card shadow-sm text-center p-4">
+          <div class="card-body">
+            <h4 class="card-title text-success fw-bold"> Sales</h4>
+            <p class="card-text mt-3">Record transactions, monitor trends, and view your shop’s overall performance.</p>
+        
+          </div>
+        </div>
+      </div>
     </div>
 
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+   
+
+    
+    </div>
+  </div>
+
+  <footer class="mt-5">
+    <p class="mb-0">© 2025 My Shop Management System. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
